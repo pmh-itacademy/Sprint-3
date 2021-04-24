@@ -1,0 +1,5 @@
+- Exercici 1 - Callback Hell...
+El codi adjunt llegeix un fitxer situat en un directori 'inbox' i 
+fixa el seu contingut de manera inversa en un altre fitxer en el directori 'outbox'. 
+Reestructuri i simplifiqui el codi existent per a evitar el denominat 'Callback Hell'
+_________

@@ -26,16 +26,17 @@ function directorio(error, files) {
 
 function leerFichero(file) {
   readFile(join(inbox, file), "utf8", invierteFichero);
-}
 
-function invierteFichero(error, data) {
-  if (error) return console.log("Error: File error");
-  writeFile(join(outbox, file), reverseText(data), errorEscritura);
-}
 
-function errorEscritura(error) {
-  if (error) return console.log("Error: File could not be saved!");
-  console.log(`${this.file} was successfully saved in the outbox!`);
+  function invierteFichero(error, data) {
+    if (error) return console.log("Error: File error");
+    writeFile(join(outbox, file), reverseText(data), errorEscritura);
+  }
+
+  function errorEscritura(error) {
+    if (error) return console.log("Error: File could not be saved!");
+    console.log(`${file} was successfully saved in the outbox!`);
+  }
 }
 
 readdir(inbox, directorio);

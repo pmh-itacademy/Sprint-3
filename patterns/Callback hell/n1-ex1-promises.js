@@ -5,14 +5,14 @@
 // Módulos necesarios
 const { promisify } = require('util');
 const fs = require('fs');
+const { join } = require("path");
 
 // Convertir en promesa las funciones de gestión de los ficheros
 const readdirPr = promisify(fs.readdir);
 const readFilePr = promisify(fs.readFile);
-const writeFilePr = promisify(fs.writeFilePr);
+const writeFilePr = promisify(fs.writeFile);
 
 // Generamos los path de entrada y salida
-const { join } = require("path");
 const inbox = join(__dirname, "inbox");
 const outbox = join(__dirname, "outbox");
 
@@ -24,16 +24,12 @@ const reverseText = str =>
     .join("");
 
 readdirPr(inbox)
-  .then(files => {
-    files.forEach((file => {
+  .then(files =>
+    files.forEach(file => {
       readFilePr(join(inbox, file), "utf8")
-        .then(data => {
-          writeFilePr(join(outbox, file), reverseText(data));
-          console.log(`${file} was successfully saved in the outbox!`)
-        })
-        .catch(console.log("Error: File could not be saved!"));
+        .catch(() => console.log("Error: File error"))
+        .then(data => writeFilePr(join(outbox, file), reverseText(data)))
+        .then(() => console.log(`${file} was successfully saved in the outbox!`))
+        .catch(() => console.log("Error: File could not be saved!"))
     }))
-  })
-  .catch(console.log("Error: Folder inaccessible"))
-
-
+  .catch(() => console.log("Error: Folder inaccessible"))
